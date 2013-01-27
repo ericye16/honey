@@ -66,9 +66,13 @@ class SubmitPage(webapp2.RequestHandler):
         # At this point, they have been validated.
         voter.alreadyVoted = True
         voter.put()
-        firstChoice = self.request.get("choice1")
-        secondChoice = self.request.get("choice2")
-        thirdChoice = self.request.get("choice3")
+        firstChoice = self.request.get("choice1").strip()
+        secondChoice = self.request.get("choice2").strip()
+        thirdChoice = self.request.get("choice3").strip()
+        if firstChoice == secondChoice or firstChoice == thirdChoice or secondChoice == thirdChoice:
+            self.response.out.write("You cannot enter the same name three times.")
+        if '' in (firstChoice, secondChoice, thirdChoice):
+            self.response.out.write("You cannot leave anything empty.")
         backup_vote = BackupVote(
             email=personEmail, firstChoice=firstChoice,
             secondChoice=secondChoice, thirdChoice=thirdChoice)
