@@ -1,7 +1,7 @@
-body    {
+body {
     margin:auto;
     position:relative;
-    width:550px;
+    width:540px;
     height:650px;
     font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
     font-size:12px;
@@ -13,12 +13,21 @@ body    {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    padding:10px;
+    padding:20px;
     border: 1px solid #999;
     border: inset 1px solid #333;
     -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+em {
+    font-style: normal;
+    font-weight: bold;
+    color: #3300BB;
+}
+h1 {
+    color:#991100;
+    font-size: 36px;
 }
 textarea#feedback {
     width:375px;
@@ -32,12 +41,7 @@ input.submit:hover {
     color:#09C;
 }
 textarea:focus, input:focus {
-    border: 1px solid #09C;
-}
-
-.submit input
-{
-    margin-left: 4.5em;
+    border: 1px solid #00CC99;
 }
 fieldset
 {
@@ -46,15 +50,15 @@ fieldset
     width: 20em
     position: relative;
 }
-legend
+fieldset legend
 {
     color: #fff;
     background: #ffa20c;
     border: 2px dotted #781351;
-    padding: 2px 6px
+    padding: 2px 6px;
 }
 label {
-color: #996611;
-font-weight: bold;
-display: block;
+    color: #996611;
+    font-weight: bold;
+    display: block;
 }
