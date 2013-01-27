@@ -14,7 +14,7 @@ next(student_emails) #get rid of the header row
 
 for i in student_emails:
     #make a list of tuples between firstnames, emails and bits
-    students.append((i[0], i[2], random.getrandbits(64)))
+    students.append((i[0], i[2], random.getrandbits(32)))
 
 outfile = open('keys.secret', 'w')
 student_emails_file.close()

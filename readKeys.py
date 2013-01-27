@@ -16,7 +16,7 @@ for keyRow in keysCSV:
     print keyRow
     person = honey.Person(
         email = keyRow[1],
-        key_ = int(keyRow[2]) - 9223372036854775807)
+        key_ = int(keyRow[2]))
     person.put()
 
 keysFile.close()

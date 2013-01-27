@@ -41,7 +41,7 @@ class SubmitPage(webapp2.RequestHandler):
     def post(self):
         personEmail = self.request.get('emailGiven')
         try:
-            personKey = int(self.request.get('key')) - 9223372036854775807
+            personKey = int(self.request.get('key'))
         except:
             #replace this later
             self.response.out.write("Your key was not a number. Try again.")
