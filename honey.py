@@ -52,13 +52,15 @@ class SubmitPage(webapp2.RequestHandler):
         person.filter("email =", personEmail)
         person.filter("key_ =", personKey)
         if person.count() < 1:
-            self.response.out.write("Your email and pin do not match.")
+            template = jinja_environment.get_template('mismatch_error.html')
+            self.response.out.write(template.render({}))
             return
 
         voter = person.get()
         # Check if they've already voted
         if voter.alreadyVoted:
-            self.response.out.write("You have already voted.")
+            template = jinja_environment.get_template('already_voted.html')
+            self.response.out.write(template.render({}))
             return
 
         # At this point, they have been validated.
@@ -69,13 +71,14 @@ class SubmitPage(webapp2.RequestHandler):
         thirdChoice = self.request.get("choice3")
         backup_vote = BackupVote(
             email=personEmail, firstChoice=firstChoice,
-            secondChoice=SecondChoice, thirdChoice=thirdChoice)
+            secondChoice=secondChoice, thirdChoice=thirdChoice)
         backup_vote.put()
 
         vote = Vote(firstChoice=firstChoice, secondChoice=secondChoice,
                     thirdChoice=thirdChoice)
         vote.put()
-        self.response.out.write("Thanks for voting!")
+        template = jinja_environment.get_template('successfully_voted.html')
+        self.response.out.write(template.render({}))
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/submit', SubmitPage)],
