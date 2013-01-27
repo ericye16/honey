@@ -55,12 +55,15 @@ class SubmitPage(webapp2.RequestHandler):
             self.response.out.write("Your email and pin do not match.")
             return
 
+        voter = person.get()
         # Check if they've already voted
-        if person[0].alreadyVoted:
+        if voter.alreadyVoted:
             self.response.out.write("You have already voted.")
             return
 
         # At this point, they have been validated.
+        voter.alreadyVoted = True
+        voter.put()
         firstChoice = self.request.get("choice1")
         secondChoice = self.request.get("choice2")
         thirdChoice = self.request.get("choice3")
