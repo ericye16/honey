@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import sys, smtplib, csv
+import sys, smtplib, csv, getpass
 from email.mime.text import MIMEText
 
 fromaddr = 'topsnight2013@gmail.com'
 username = 'topsnight2013@gmail.com'
-password = input('Enter the password for %s: ' % username)
+password = getpass.getpass('Enter the password for %s: ' % username)
 
 keysFile = open('keys.secret')
 
@@ -35,14 +35,11 @@ def sendSingleEmail(keyFileRow, server):
     msg['To'] = toEmail
     print(msg)
     
-    try:
-        server.send_message(msg)
-    except:
-        print("Message was not sent to %s" % toEmail, file=sys.stderr)
+    server.send_message(msg)
 
 keys = csv.reader(keysFile)
 
 for keyRow in keys:
-    sendSingleEmail(keyRow, None)
+    sendSingleEmail(keyRow, server)
 
 server.quit()
