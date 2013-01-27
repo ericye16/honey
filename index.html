@@ -2,7 +2,8 @@
 <html>
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-    <title>TOPSNight 2013 Leadership voting</title>
+    <form action="/submit" method="post">
+     <title>TOPSNight 2013 Leadership voting</title>
   </head>
   <body>
     <h1>TOPSNight 2013 Leadership</h1>
@@ -16,10 +17,11 @@
 Eric Y
 Eric C Y
       </pre>(But don't actually vote for me :P)</p>
-    <form action="/submit" method="post">
+   
       <p><label>Your email: <input type=email name=emailGiven required></label></p>
       
-      <fieldset>
+     <fieldset>
+     <legend> Your Ballot: </legend>
         <p><label>Top choice: <input type="text" name="choice1" required></label></p>
         <p><label>Second choice: <input type="text" name="choice2" required></label></p>
         <p><label>Third choice: <input type="text" name="choice3" required></label></p>
@@ -30,4 +32,5 @@ Eric C Y
       <p><input type="submit" value="Cast Vote"></p>
     
   </body>
+  </form>
 </html>
