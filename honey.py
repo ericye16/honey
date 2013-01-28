@@ -4,6 +4,8 @@ import webapp2
 import jinja2
 import os
 
+from google.appengine.ext import db
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -15,7 +17,10 @@ class EST(datetime.tzinfo):
 
 cutoffTime = datetime.datetime(2013, 1, 28, 22, tzinfo=EST())
 
-from google.appengine.ext import db
+def respond_with_error(errorMsg, requestHandler):
+    template = jinja_environment.get_template('generic_error.html')
+    requestHandler.response.out.write(template.render({'errorMsg': errorMsg}))
+
 
 class Person(db.Model):
     """Models a person, with an email and a key."""
@@ -50,8 +55,8 @@ class MainPage(webapp2.RequestHandler):
             try:
                 template = jinja_environment.get_template('results.html')
             except:
-                self.response.out.write(
-                    "The cutoff time passed, but no results are out.")
+                respond_with_error(
+                    "The cutoff time passed, but no results are out.", self)
                 return
         self.response.out.write(template.render({}))
 
@@ -63,8 +68,8 @@ class SubmitPage(webapp2.RequestHandler):
             try:
                 template = jinja_environment.get_template('results.html')
             except:
-                self.response.out.write(
-                    "The cutoff time passed, but no results are out.")
+                respond_with_error(
+                    "The cutoff time passed, but no results are out.", self)
                 return
             self.response.out.write(template.render({}))
             return
@@ -74,8 +79,7 @@ class SubmitPage(webapp2.RequestHandler):
         try:
             personKey = int(self.request.get('key'))
         except:
-            #replace this later
-            self.response.out.write("Your key was not a number. Try again.")
+            respond_with_error("Your key was not a number. Try again.", self)
             return
 
         # Check if the email and key are right
