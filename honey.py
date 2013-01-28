@@ -7,6 +7,14 @@ import os
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+class EST(datetime.tzinfo):
+    def utcoffset(self, dt):
+        return datetime.timedelta(hours = -5)
+    def dst(self, dt):
+        return datetime.timedelta(0)
+
+cutoffTime = datetime.datetime(2013, 1, 28, 22, tzinfo=EST())
+
 from google.appengine.ext import db
 
 class Person(db.Model):
@@ -29,16 +37,39 @@ class BackupVote(db.Model):
     secondChoice = db.StringProperty()
     thirdChoice = db.StringProperty()
     date = db.DateTimeProperty(auto_now_add=True)
-    
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        # this is really just a static page
-        template = jinja_environment.get_template('index.html')
+
+        #if the current time is before the cutoff, let them vote
+        if datetime.datetime.now(EST()) < cutoffTime:
+            template = jinja_environment.get_template('index.html')
+
+        #otherwise show them the door
+        else:
+            try:
+                template = jinja_environment.get_template('results.html')
+            except:
+                self.response.out.write(
+                    "The cutoff time passed, but no results are out.")
+                return
         self.response.out.write(template.render({}))
 
 class SubmitPage(webapp2.RequestHandler):
     def post(self):
+
+        #cutoff time passed, not accepting any more votes
+        if datetime.datetime.now(EST()) > cutoffTime:
+            try:
+                template = jinja_environment.get_template('results.html')
+            except:
+                self.response.out.write(
+                    "The cutoff time passed, but no results are out.")
+                return
+            self.response.out.write(template.render({}))
+            return
+
+        #cutoff time didn't pass
         personEmail = self.request.get('emailGiven')
         try:
             personKey = int(self.request.get('key'))

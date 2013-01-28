@@ -5,7 +5,9 @@ import getpass
 import sys
 
 def auth_func():
-    return (raw_input('Username:'), getpass.getpass('Password:'))
+    print("Username:", end='', file=sys.stderr)
+    return (raw_input(),
+            getpass.getpass('Password:', sys.stderr))
 
 remote_api_stub.ConfigureRemoteApi(None, '/_ah/remote_api', auth_func,
                                    'topsnight13.appspot.com')
