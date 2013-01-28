@@ -57,7 +57,7 @@ if printHTML:
     HTMLTail = '''
   <!--end autogeneration-->
   </table>
-  <p class="footnote">A first choice is assigned 3 points,
+  <p class="footnote">*A first choice is assigned 3 points,
   second choice 2 points, and third choice 1 point.</p>
 </body>'''
     print(HTMLHead)
