@@ -3,3 +3,4 @@
 Class.csv
 __pycache__
 results.html
+*.DS_Store
