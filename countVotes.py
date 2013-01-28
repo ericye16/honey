@@ -4,6 +4,8 @@ import honey
 import getpass
 import sys
 
+# Usage: python countVotes.py fdsfdsfds > results.html
+
 def auth_func():
     print("Username:", end='', file=sys.stderr)
     return (raw_input(),
