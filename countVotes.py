@@ -53,7 +53,7 @@ if printHTML:
     rowTemplate = '''
     <tr>
       <td class="narrow">%d</td>
-      <td class="narrow">%s</td>
+      <td>%s</td>
       <td class="narrow">%d</td>
     </tr>'''
     HTMLTail = '''
